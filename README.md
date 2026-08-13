@@ -6,33 +6,13 @@ Levo produto do schema ao domínio no ar: modelagem de dados, API, interface e d
 A maior parte do que construí está em produção hoje, atendendo usuário real —
 sistemas de saúde suplementar, CRM e captação de leads.
 
-[![Site](https://img.shields.io/badge/cauedev.shop-125CFE?style=for-the-badge&logo=googlechrome&logoColor=white)](https://cauedev.shop)
-[![Email](https://img.shields.io/badge/E--mail-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:clsolucoesweb@gmail.com)
+[**cauedev.shop**](https://cauedev.shop) · [**clsolucoesweb@gmail.com**](mailto:clsolucoesweb@gmail.com)
 
 </div>
 
 ---
 
-<div align="center">
-
-### 🧱 Stack
-
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![Node.js](https://img.shields.io/badge/Node.js-5FA04E?style=for-the-badge&logo=nodedotjs&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
-
-![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
-![React](https://img.shields.io/badge/React_19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
-![three.js](https://img.shields.io/badge/three.js-000000?style=for-the-badge&logo=threedotjs&logoColor=white)
-
-![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
-![Linux](https://img.shields.io/badge/Linux_VPS-FCC624?style=for-the-badge&logo=linux&logoColor=black)
-
-</div>
+## 🧱 Stack
 
 | | |
 |---|---|
