@@ -1,14 +1,40 @@
-## Cauê Lima
+<div align="center">
 
-Desenvolvedor full-stack. Levo produto do schema ao domínio no ar: modelagem de dados,
-API, interface e deploy. A maior parte do que construí está em produção hoje, atendendo
-usuário real — sistemas de saúde suplementar, CRM e captação de leads.
+# Cauê Lima
 
-Manaus, AM · disponível para remoto · [cauedev.shop](https://cauedev.shop)
+**Desenvolvedor full-stack** · Manaus, AM · disponível para remoto
+
+Levo produto do schema ao domínio no ar: modelagem de dados, API, interface e deploy.
+A maior parte do que construí está em produção hoje, atendendo usuário real —
+sistemas de saúde suplementar, CRM e captação de leads.
+
+[![Site](https://img.shields.io/badge/cauedev.shop-125CFE?style=for-the-badge&logo=googlechrome&logoColor=white)](https://cauedev.shop)
+[![Email](https://img.shields.io/badge/E--mail-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:clsolucoesweb@gmail.com)
+
+</div>
 
 ---
 
-### Stack
+<div align="center">
+
+### 🧱 Stack
+
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Node.js](https://img.shields.io/badge/Node.js-5FA04E?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React_19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![three.js](https://img.shields.io/badge/three.js-000000?style=for-the-badge&logo=threedotjs&logoColor=white)
+
+![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux_VPS-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+
+</div>
 
 | | |
 |---|---|
@@ -21,30 +47,26 @@ Manaus, AM · disponível para remoto · [cauedev.shop](https://cauedev.shop)
 
 ---
 
-### Em produção
+## 🚀 Em produção
 
 | Produto | O que é | Stack | Código |
 |---|---|---|---|
 | [**Pront.**](https://pront-saude-digital.netlify.app) | SaaS multi-tenant de saúde digital: prontuário eletrônico, agenda e gestão de clínicas, com isolamento por clínica via Row Level Security | Next.js 14 · TypeScript · Supabase | [público](https://github.com/cauelimsia/pront-saude-digital) |
-| [**Rede Credenciada**](https://top-prime-rede.vercel.app) | Consulta de rede hospitalar por plano de saúde. ETL próprio sobre os dados abertos da ANS: ~40M de vínculos reduzidos a uma base consultável de ~66 mil planos e ~33 mil hospitais | Next.js 16 · Postgres · ETL em Node | privado |
+| [**Rede Certa**](https://top-prime-rede.vercel.app) | Consulta de rede hospitalar por plano de saúde. ETL próprio sobre os dados abertos da ANS: ~40M de vínculos reduzidos a uma base consultável de ~66 mil planos e ~33 mil hospitais | Next.js 16 · Postgres · ETL em Node | privado |
 | [**Top Prime Seguros**](https://topprimeseguros.com.br) | Site de captação de leads com atribuição de ponta a ponta e conformidade LGPD/Google Ads | Next.js · Supabase | privado |
 | [**Cotador**](https://top-prime-cotador.vercel.app) | Gerador de cotações de plano de saúde em PDF, com múltiplos temas de marca | Next.js · Supabase | privado |
 | [**DNIA**](https://dnia-site.vercel.app) | Site de produto para agente de IA em WhatsApp, com animação em three.js e GSAP | Next.js 16 · three.js · GSAP | privado |
 
 ---
 
-### Repositórios públicos
+## 📂 Repositórios públicos
 
-- **[pront-saude-digital](https://github.com/cauelimsia/pront-saude-digital)** — SaaS multi-tenant de saúde digital em Next.js + Supabase, com RLS por clínica.
-- **[redecorr-apresentacao](https://github.com/cauelimsia/redecorr-apresentacao)** — deck institucional em WebGL: uma nuvem de 2.800 partículas em three.js que muda de formação conforme a narrativa, com modo apresentador e deep-link por slide. JavaScript puro.
-- **[plano-a-apresentacao](https://github.com/cauelimsia/plano-a-apresentacao)** — engine de slides própria em HTML/CSS/JS, navegação por teclado e deep-link por hash.
-- **[presentations](https://github.com/cauelimsia/presentations)** — mesma engine, agora data-driven em ES modules.
+| Repo | O que tem de interessante |
+|---|---|
+| **[pront-saude-digital](https://github.com/cauelimsia/pront-saude-digital)** | Multi-tenancy real: o isolamento entre clínicas está nas policies do Postgres, não na aplicação |
+| **[redecorr-apresentacao](https://github.com/cauelimsia/redecorr-apresentacao)** | Deck em WebGL — uma nuvem de 2.800 partículas em three.js que muda de formação conforme a narrativa, com modo apresentador. JavaScript puro |
+| **[plano-a-apresentacao](https://github.com/cauelimsia/plano-a-apresentacao)** | Engine de slides própria onde o conteúdo é dado: `index.html` tem 44 linhas, o resto é derivado |
+| **[presentations](https://github.com/cauelimsia/presentations)** | Mesma engine, agora data-driven em ES modules |
 
-Boa parte do que trabalho é código de cliente e fica em repositório privado. Os links da
-tabela acima levam ao produto no ar, que é onde dá para ver o resultado.
-
----
-
-### Contato
-
-[cauedev.shop](https://cauedev.shop) · [clsolucoesweb@gmail.com](mailto:clsolucoesweb@gmail.com)
+> Boa parte do que trabalho é código de cliente e fica em repositório privado.
+> Os links da tabela **Em produção** levam ao produto no ar, que é onde dá para ver o resultado.
