@@ -6,8 +6,8 @@ Levo produto do schema ao domínio no ar: modelagem de dados, API, interface e d
 A maior parte do que construí está em produção hoje, atendendo usuário real —
 sistemas de saúde suplementar, CRM e captação de leads.
 
-<a href="https://cauedev.shop"><img height="34" src="https://img.shields.io/badge/cauedev.shop-125CFE?style=flat&logo=googlechrome&logoColor=white" alt="cauedev.shop"></a>
-<a href="mailto:clsolucoesweb@gmail.com"><img height="34" src="https://img.shields.io/badge/E--mail-EA4335?style=flat&logo=gmail&logoColor=white" alt="E-mail"></a>
+<a href="https://cauedev.shop"><img width="175" src="https://img.shields.io/badge/cauedev.shop-125CFE?style=flat&logo=googlechrome&logoColor=white" alt="cauedev.shop"></a>
+<a href="mailto:clsolucoesweb@gmail.com"><img width="107" src="https://img.shields.io/badge/E--mail-EA4335?style=flat&logo=gmail&logoColor=white" alt="E-mail"></a>
 
 </div>
 
@@ -17,20 +17,20 @@ sistemas de saúde suplementar, CRM e captação de leads.
 
 <div align="center">
 
-<img height="34" src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white" alt="TypeScript">
-<img height="34" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black" alt="JavaScript">
-<img height="34" src="https://img.shields.io/badge/Node.js-5FA04E?style=flat&logo=nodedotjs&logoColor=white" alt="Node.js">
-<img height="34" src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat&logo=postgresql&logoColor=white" alt="PostgreSQL">
+<img width="148" src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white" alt="TypeScript">
+<img width="144" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black" alt="JavaScript">
+<img width="117" src="https://img.shields.io/badge/Node.js-5FA04E?style=flat&logo=nodedotjs&logoColor=white" alt="Node.js">
+<img width="155" src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat&logo=postgresql&logoColor=white" alt="PostgreSQL">
 
-<img height="34" src="https://img.shields.io/badge/Next.js-000000?style=flat&logo=nextdotjs&logoColor=white" alt="Next.js">
-<img height="34" src="https://img.shields.io/badge/React_19-61DAFB?style=flat&logo=react&logoColor=black" alt="React 19">
-<img height="34" src="https://img.shields.io/badge/Tailwind-06B6D4?style=flat&logo=tailwindcss&logoColor=white" alt="Tailwind CSS">
-<img height="34" src="https://img.shields.io/badge/three.js-000000?style=flat&logo=threedotjs&logoColor=white" alt="three.js">
+<img width="114" src="https://img.shields.io/badge/Next.js-000000?style=flat&logo=nextdotjs&logoColor=white" alt="Next.js">
+<img width="131" src="https://img.shields.io/badge/React_19-61DAFB?style=flat&logo=react&logoColor=black" alt="React 19">
+<img width="124" src="https://img.shields.io/badge/Tailwind-06B6D4?style=flat&logo=tailwindcss&logoColor=white" alt="Tailwind CSS">
+<img width="121" src="https://img.shields.io/badge/three.js-000000?style=flat&logo=threedotjs&logoColor=white" alt="three.js">
 
-<img height="34" src="https://img.shields.io/badge/Supabase-3FCF8E?style=flat&logo=supabase&logoColor=white" alt="Supabase">
-<img height="34" src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white" alt="Docker">
-<img height="34" src="https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white" alt="Vercel">
-<img height="34" src="https://img.shields.io/badge/Linux_VPS-FCC624?style=flat&logo=linux&logoColor=black" alt="Linux VPS">
+<img width="138" src="https://img.shields.io/badge/Supabase-3FCF8E?style=flat&logo=supabase&logoColor=white" alt="Supabase">
+<img width="114" src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white" alt="Docker">
+<img width="107" src="https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white" alt="Vercel">
+<img width="141" src="https://img.shields.io/badge/Linux_VPS-FCC624?style=flat&logo=linux&logoColor=black" alt="Linux VPS">
 
 </div>
 
