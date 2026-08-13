@@ -1,16 +1,15 @@
-"""Gera os social previews (1280x640) e o banner de perfil (1280x360).
+"""Gera o banner do perfil e os social previews dos repositorios.
 
-Identidade compartilhada: fundo escuro em gradiente, malha de pontos, e uma nuvem
-de particulas do lado direito que ecoa o organismo CORE5 do deck da RedeCORR.
-Cada repo tem uma cor de acento propria, mas a composicao e a mesma — os cards
-precisam ler como familia quando aparecem juntos.
+Segue o sistema visual do cauedev.shop (DESIGN.md / src/styles/main.css): neubrutalismo
+com borda ink de 2px, sombra dura sem blur, cor chapada, Space Grotesk no display e Inter
+no corpo. A marca Atlas (mascote, lockup, nome) NAO entra aqui de proposito: o perfil se
+apresenta como pessoa procurando vaga, nao como agencia. O que atravessa e a linguagem
+visual, para que quem sai do GitHub para o site sinta a mesma mao.
 """
-import math
 import os
-import random
 import urllib.request
 
-from PIL import Image, ImageDraw, ImageFilter, ImageFont
+from PIL import Image, ImageDraw, ImageFont
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 FONTS = os.path.join(BASE, "fonts")
@@ -18,99 +17,79 @@ OUT = os.path.join(BASE, "cards")
 os.makedirs(OUT, exist_ok=True)
 os.makedirs(FONTS, exist_ok=True)
 
-# Poppins e a familia de todas as marcas — baixada na primeira execucao (OFL).
-POPPINS = {
-    "Poppins-Regular.ttf": "https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrFJA.ttf",
-    "Poppins-SemiBold.ttf": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6V1s.ttf",
-    "Poppins-ExtraBold.ttf": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLDD4V1s.ttf",
+# Space Grotesk + Inter, as mesmas do site (OFL). Baixadas na primeira execucao.
+FONT_URLS = {
+    "SpaceGrotesk-Bold.ttf":
+        "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj4PVksj.ttf",
+    "SpaceGrotesk-Medium.ttf":
+        "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj7aUUsj.ttf",
+    "Inter-SemiBold.ttf":
+        "https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf",
+    "Inter-Regular.ttf":
+        "https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf",
 }
-for _name, _url in POPPINS.items():
+for _name, _url in FONT_URLS.items():
     _dest = os.path.join(FONTS, _name)
     if not os.path.exists(_dest):
         print("baixando", _name)
         urllib.request.urlretrieve(_url, _dest)
 
-REGULAR = os.path.join(FONTS, "Poppins-Regular.ttf")
-SEMI = os.path.join(FONTS, "Poppins-SemiBold.ttf")
-XBOLD = os.path.join(FONTS, "Poppins-ExtraBold.ttf")
+GROTESK_BOLD = os.path.join(FONTS, "SpaceGrotesk-Bold.ttf")
+GROTESK_MED = os.path.join(FONTS, "SpaceGrotesk-Medium.ttf")
+INTER = os.path.join(FONTS, "Inter-Regular.ttf")
 
-BG_TOP = (7, 11, 22)
-BG_BOTTOM = (13, 20, 38)
-INK = (255, 255, 255)
-MUTED = (139, 148, 168)
+# tokens de main.css
+BLUE = (18, 92, 254)
+LIME = (204, 255, 0)
+CORAL = (255, 77, 77)
+INK = (0, 0, 0)
+PAPER = (255, 255, 255)
+CREAM = (245, 242, 234)
+TEXT = (10, 10, 10)
+MUTED = (86, 86, 86)
+
+BORDER = 3        # a borda de 2px do site, engrossada para 1280px de card
+SHADOW = 14       # sombra dura, sem blur
+RADIUS = 18
 
 
 def font(path, size):
     return ImageFont.truetype(path, size)
 
 
-def hex_rgb(h):
-    h = h.lstrip("#")
-    return tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
+def on(fill):
+    """Tinta legivel sobre um preenchimento chapado. Preto sobre o azul da marca
+    da 4.0:1 e branco da 5.2:1 — entao azul pede branco, lime e coral pedem preto."""
+    def lin(c):
+        c /= 255
+        return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+    lum = 0.2126 * lin(fill[0]) + 0.7152 * lin(fill[1]) + 0.0722 * lin(fill[2])
+    contrast_white = 1.05 / (lum + 0.05)
+    contrast_black = (lum + 0.05) / 0.05
+    return PAPER if contrast_white > contrast_black else INK
 
 
-def gradient(w, h):
-    img = Image.new("RGB", (1, h))
-    px = img.load()
-    for y in range(h):
-        t = y / max(h - 1, 1)
-        px[0, y] = tuple(
-            round(BG_TOP[i] + (BG_BOTTOM[i] - BG_TOP[i]) * t) for i in range(3)
-        )
-    return img.resize((w, h), Image.BICUBIC)
+def tracked(draw, xy, text, f, fill, tracking=0.0, anchor_top=True):
+    """Desenha com letter-spacing. Pillow nao tem tracking, entao vai glifo a glifo.
+    O display do site usa ate -0.04em; tracking e uma fracao do corpo da fonte."""
+    x, y = xy
+    step = f.size * tracking
+    for ch in text:
+        draw.text((x, y), ch, font=f, fill=fill, anchor="la" if anchor_top else "ls")
+        x += draw.textlength(ch, font=f) + step
+    return x
 
 
-def dot_grid(img, step=34, alpha=10):
-    w, h = img.size
-    layer = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-    d = ImageDraw.Draw(layer)
-    for y in range(step, h, step):
-        for x in range(step, w, step):
-            d.ellipse([x - 1, y - 1, x + 1, y + 1], fill=(255, 255, 255, alpha))
-    img.alpha_composite(layer)
+def tracked_width(draw, text, f, tracking=0.0):
+    step = f.size * tracking
+    return sum(draw.textlength(c, font=f) for c in text) + step * max(len(text) - 1, 0)
 
 
-def glow(img, cx, cy, radius, rgb, strength=64):
-    """Halo radial suave atras da nuvem de particulas."""
-    w, h = img.size
-    layer = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-    d = ImageDraw.Draw(layer)
-    steps = 26
-    for i in range(steps, 0, -1):
-        r = radius * i / steps
-        a = int(strength * (1 - i / steps) ** 2.2)
-        d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=rgb + (a,))
-    layer = layer.filter(ImageFilter.GaussianBlur(28))
-    img.alpha_composite(layer)
-
-
-def particles(img, cx, cy, spread, rgb, count=520, seed=7):
-    """Nuvem gaussiana de pontos — a assinatura visual, vinda do organismo CORE5."""
-    rnd = random.Random(seed)
-    w, h = img.size
-    layer = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-    d = ImageDraw.Draw(layer)
-    for _ in range(count):
-        ang = rnd.uniform(0, math.tau)
-        # raiz da uniforme deixa o miolo mais denso que a borda
-        rad = spread * math.sqrt(rnd.random()) * rnd.uniform(0.55, 1.0)
-        x = cx + math.cos(ang) * rad
-        y = cy + math.sin(ang) * rad * 0.92
-        if not (-20 < x < w + 20 and -20 < y < h + 20):
-            continue
-        falloff = 1 - min(rad / spread, 1)
-        size = rnd.uniform(1.1, 3.4) * (0.55 + falloff)
-        a = int(rnd.uniform(70, 235) * (0.3 + 0.7 * falloff))
-        d.ellipse([x - size, y - size, x + size, y + size], fill=rgb + (a,))
-    img.alpha_composite(layer)
-
-
-def fit(draw, text, path, start, max_w, min_size=30):
-    """Diminui a fonte ate o texto caber na largura disponivel."""
+def fit_tracked(draw, text, path, start, max_w, tracking, min_size=34):
     size = start
     while size > min_size:
         f = font(path, size)
-        if draw.textlength(text, font=f) <= max_w:
+        if tracked_width(draw, text, f, tracking) <= max_w:
             return f
         size -= 2
     return font(path, min_size)
@@ -118,123 +97,168 @@ def fit(draw, text, path, start, max_w, min_size=30):
 
 def wrap(draw, text, f, max_w):
     words, lines, cur = text.split(), [], ""
-    for word in words:
-        trial = (cur + " " + word).strip()
+    for w in words:
+        trial = (cur + " " + w).strip()
         if draw.textlength(trial, font=f) <= max_w:
             cur = trial
         else:
             if cur:
                 lines.append(cur)
-            cur = word
+            cur = w
     if cur:
         lines.append(cur)
     return lines
 
 
-def lighten(rgb, amount=0.45):
-    return tuple(round(c + (255 - c) * amount) for c in rgb)
+def hard_box(d, box, fill, shadow=SHADOW, radius=RADIUS, border=BORDER):
+    """Caixa neubrutalist: preenchimento chapado, borda ink, sombra dura deslocada."""
+    x0, y0, x1, y1 = box
+    if shadow:
+        d.rounded_rectangle([x0 + shadow, y0 + shadow, x1 + shadow, y1 + shadow],
+                            radius=radius, fill=INK)
+    d.rounded_rectangle(box, radius=radius, fill=fill, outline=INK, width=border)
 
 
-def chips(img, items, x, y, rgb):
-    """Desenhado em camada propria: ImageDraw substitui alpha em vez de mesclar,
-    entao pintar direto na imagem transformaria o preenchimento translucido em bloco solido."""
+def blue_grid(img, step=44, alpha=13):
+    """Malha azul de fundo — o mesmo motivo do hero do site."""
+    w, h = img.size
+    layer = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(layer)
+    for x in range(0, w, step):
+        d.line([x, 0, x, h], fill=BLUE + (alpha,), width=1)
+    for y in range(0, h, step):
+        d.line([0, y, w, y], fill=BLUE + (alpha,), width=1)
+    img.alpha_composite(layer)
+
+
+def sticker(img, text, accent, cx, cy, angle=-8):
+    """Selo girado, como os stickers do hero. Rotacionado fora e colado depois."""
+    f = font(GROTESK_BOLD, 26)
+    tmp = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+    tw = tracked_width(tmp, text, f, 0.06)
+    pad_x, pad_y = 26, 16
+    w, h = int(tw + pad_x * 2), int(f.size + pad_y * 2)
+    pill = Image.new("RGBA", (w + SHADOW + 8, h + SHADOW + 8), (0, 0, 0, 0))
+    d = ImageDraw.Draw(pill)
+    hard_box(d, [4, 4, 4 + w, 4 + h], accent, shadow=9, radius=10)
+    tracked(d, (4 + pad_x, 4 + pad_y - 2), text, f, on(accent), tracking=0.06)
+    pill = pill.rotate(angle, expand=True, resample=Image.BICUBIC)
+    img.alpha_composite(pill, (int(cx - pill.width / 2), int(cy - pill.height / 2)))
+
+
+def chips(img, items, x, y, accent):
     layer = Image.new("RGBA", img.size, (0, 0, 0, 0))
     d = ImageDraw.Draw(layer)
-    f = font(SEMI, 21)
-    pad_x, gap, hgt = 18, 11, 42
-    ink = lighten(rgb, 0.55) + (255,)
-    for item in items:
+    f = font(GROTESK_MED, 25)
+    pad_x, gap, hgt = 20, 14, 50
+    fills = [accent, PAPER, PAPER, CREAM, PAPER]
+    for i, item in enumerate(items):
         tw = d.textlength(item, font=f)
-        d.rounded_rectangle([x, y, x + tw + pad_x * 2, y + hgt], radius=hgt // 2,
-                            fill=rgb + (30,), outline=rgb + (115,), width=1)
-        d.text((x + pad_x, y + hgt / 2 + 1), item, font=f, fill=ink, anchor="lm")
+        fill = fills[i % len(fills)]
+        hard_box(d, [x, y, x + tw + pad_x * 2, y + hgt], fill, shadow=6, radius=8)
+        d.text((x + pad_x, y + hgt / 2 + 1), item, font=f, fill=on(fill), anchor="lm")
         x += tw + pad_x * 2 + gap
     img.alpha_composite(layer)
 
 
-def card(name, title, subtitle, tech, accent, size=(1280, 640), eyebrow="github.com/cauelimsia"):
+def card(name, title, subtitle, tech, accent, badge, size=(1280, 640),
+         eyebrow="github.com/cauelimsia"):
     w, h = size
-    rgb = hex_rgb(accent)
-    img = gradient(w, h).convert("RGBA")
-
-    glow(img, w * 0.78, h * 0.46, h * 0.62, rgb, strength=58)
-    dot_grid(img)
-    particles(img, w * 0.78, h * 0.46, h * 0.44, rgb, count=560, seed=abs(hash(name)) % 9999)
+    img = Image.new("RGBA", (w, h), CREAM + (255,))
+    blue_grid(img)
 
     d = ImageDraw.Draw(img)
-    # metricas proporcionais a altura: o mesmo layout serve card 2:1 e banner baixo
-    pad = round(h * 0.134)
-    col = int(w * 0.60) - pad
-    title_size = round(h * 0.122)
-    sub_size = max(21, round(h * 0.042))
-    line_h = round(sub_size * 1.40)
+    m = round(h * 0.075)                      # margem externa
+    hard_box(d, [m, m, w - m - SHADOW, h - m - SHADOW], PAPER)
 
-    # barra de acento na borda esquerda
-    d.rectangle([0, 0, 7, h], fill=rgb + (255,))
+    pad = m + round(h * 0.062)
+    col = int(w * 0.66) - pad
 
-    f_eye = font(SEMI, max(16, round(h * 0.031)))
-    d.text((pad, h * 0.185), eyebrow.upper(), font=f_eye, fill=lighten(rgb, 0.25) + (240,), anchor="ls")
+    # eyebrow com marcador quadrado chapado
+    f_eye = font(GROTESK_MED, 22)
+    sq = 15
+    ey = pad + 6
+    d.rectangle([pad, ey, pad + sq, ey + sq], fill=accent, outline=INK, width=2)
+    tracked(d, (pad + sq + 14, ey - 3), eyebrow.upper(), f_eye, TEXT, tracking=0.11)
 
-    f_title = fit(d, title, XBOLD, title_size, col, min_size=round(title_size * 0.52))
-    title_y = h * 0.185 + round(h * 0.047)
-    d.text((pad, title_y), title, font=f_title, fill=INK, anchor="la")
+    # os chips ancoram no rodape; o bloco de texto e centrado no que sobra,
+    # senao o card fica pesado em cima com um vao morto no meio
+    chips_y = h - pad - 50
+    f_title = fit_tracked(d, title, GROTESK_BOLD, round(h * 0.135), col, -0.035)
+    f_sub = font(INTER, max(20, round(h * 0.039)))
+    sub_lines = wrap(d, subtitle, f_sub, col)[:3]
 
-    # regua fina separando titulo do subtitulo
-    rule_y = title_y + f_title.size * 1.34
-    d.line([pad, rule_y, pad + 66, rule_y], fill=rgb + (200,), width=3)
+    gap_rule = round(h * 0.030)
+    gap_sub = round(h * 0.048)
+    line_h = round(f_sub.size * 1.55)
+    block_h = f_title.size * 1.12 + gap_rule + 9 + gap_sub + line_h * len(sub_lines)
 
-    f_sub = font(REGULAR, sub_size)
-    y = rule_y + round(h * 0.041)
-    for line in wrap(d, subtitle, f_sub, col)[:3]:
+    region_top = ey + sq + round(h * 0.040)
+    region_bottom = chips_y - round(h * 0.045)
+    ty = region_top + max((region_bottom - region_top - block_h) / 2, 0)
+
+    # titulo: Space Grotesk 700 com tracking negativo, como o display do site
+    tracked(d, (pad, ty), title, f_title, INK, tracking=-0.035)
+
+    # barra chapada no lugar da regua fina
+    ry = ty + f_title.size * 1.12 + gap_rule
+    d.rectangle([pad, ry, pad + 92, ry + 9], fill=accent, outline=INK, width=2)
+
+    y = ry + 9 + gap_sub
+    for line in sub_lines:
         d.text((pad, y), line, font=f_sub, fill=MUTED, anchor="la")
         y += line_h
 
-    # ancora os chips no rodape, mas nunca por cima do subtitulo
-    chips(img, tech, pad, max(y + 20, h - pad - 42), rgb)
+    chips(img, tech, pad, chips_y, accent)
+
+    if badge:
+        sticker(img, badge, accent, w - m - round(w * 0.13), m + round(h * 0.20))
 
     path = os.path.join(OUT, f"{name}.png")
     img.convert("RGB").save(path, "PNG", optimize=True)
     return path
 
 
+# A paleta e fixa (azul/lime/coral). O que varia por repo e qual acento lidera e o selo,
+# entao os cards continuam sendo obviamente da mesma familia.
 CARDS = [
     ("pront-saude-digital", "Pront.",
      "SaaS multi-tenant de saúde digital. O isolamento entre clínicas está nas policies do Postgres, não na aplicação.",
-     ["Next.js 14", "TypeScript", "Supabase", "RLS"], "#2DD4A7"),
+     ["Next.js 14", "TypeScript", "Supabase", "RLS"], BLUE, "SAAS"),
 
     ("surebet-api", "surebet-api",
      "Motor de arbitragem esportiva como função pura, e um worker que reconcilia estado em vez de acumular.",
-     ["TypeScript", "Node.js", "pnpm", "Postgres", "Vitest"], "#38BDF8"),
+     ["TypeScript", "Node.js", "pnpm", "Postgres"], LIME, "OPEN SOURCE"),
 
-    ("redecorr-apresentacao", "RedeCORR · CORE5®",
+    ("redecorr-apresentacao", "RedeCORR",
      "Deck institucional em WebGL: 2.800 partículas que mudam de formação conforme a narrativa.",
-     ["three.js", "WebGL", "JavaScript"], "#4C8DFF"),
+     ["three.js", "WebGL", "JavaScript"], BLUE, "WEBGL"),
 
-    ("plano-a-apresentacao", "Plano A · GoCare",
+    ("plano-a-apresentacao", "Plano A",
      "Engine de slides onde o conteúdo é dado, não marcação: o index.html tem 44 linhas.",
-     ["JavaScript", "HTML", "CSS"], "#FF3D71"),
+     ["JavaScript", "HTML", "CSS"], CORAL, "SEM BUILD"),
 
     ("presentations", "Nutrição & Estilo de Vida",
      "Deck data-driven em ES modules: cada slide é um objeto, e o layout é derivado dele.",
-     ["ES Modules", "HTML", "CSS"], "#F472B6"),
+     ["ES Modules", "HTML", "CSS"], CORAL, "DATA-DRIVEN"),
 
     ("trends-marketing", "Trends do Dia",
      "O que está em alta no Google, TikTok e Instagram — já virado em pauta de conteúdo.",
-     ["HTML", "CSS", "GitHub Pages"], "#FF6B3D"),
+     ["HTML", "CSS", "Pages"], LIME, "DIÁRIO"),
 
     ("cauelimsia", "Cauê Lima",
      "Desenvolvedor full-stack. Levo produto do schema ao domínio no ar.",
-     ["TypeScript", "Next.js", "Postgres", "Node.js"], "#125CFE"),
+     ["TypeScript", "Next.js", "Postgres", "Node.js"], BLUE, "FULL-STACK"),
 ]
 
 if __name__ == "__main__":
     for args in CARDS:
         print("card:", card(*args))
 
-    # banner do perfil — mesma identidade, faixa mais baixa
     print("banner:", card(
         "banner-perfil", "Cauê Lima",
         "Dev full-stack — do schema ao domínio no ar.",
         ["TypeScript", "Next.js", "Postgres", "Supabase", "Docker"],
-        "#125CFE", size=(1280, 440), eyebrow="Manaus, AM · disponível para remoto",
+        BLUE, "MANAUS · REMOTO", size=(1280, 460),
+        eyebrow="disponível para contratação",
     ))

@@ -14,16 +14,30 @@ As fontes Poppins são baixadas na primeira execução. A saída vai para `tools
 
 ### Identidade
 
-Todos os cards saem da mesma composição, para que leiam como família quando aparecem juntos:
+Segue o sistema visual do **[cauedev.shop](https://cauedev.shop)** — os tokens saem de
+`DESIGN.md` e `src/styles/main.css` daquele projeto. Quem sai do GitHub para o site sente a
+mesma mão.
 
 | Elemento | Decisão |
 |---|---|
-| Fundo | gradiente `#070B16 → #0D1426` |
-| Textura | malha de pontos a 34px, 4% de opacidade |
-| Motivo | nuvem gaussiana de partículas à direita — o mesmo organismo do deck [redecorr-apresentacao](https://github.com/cauelimsia/redecorr-apresentacao) |
-| Tipografia | Poppins (ExtraBold no título, Regular no texto, SemiBold nos chips) |
-| Acento | uma cor por projeto, aplicada na barra da esquerda, na régua, nos chips e nas partículas |
-| Formato | 1280×640 para social preview, 1280×440 para o banner do perfil |
+| Linguagem | neubrutalismo: borda ink, cor chapada, sombra dura **sem blur** |
+| Fundo | `--cream #f5f2ea` com a malha azul do hero a 5% |
+| Card | `--paper #fff`, borda ink, sombra deslocada, radius 18 |
+| Cor | tríade fixa `--blue #125cfe` · `--lime #ccff00` · `--coral #ff4d4d` |
+| Tipografia | Space Grotesk 700 no display (tracking −0.035em), Inter no corpo |
+| Motivo | selo girado −8°, como os stickers do hero |
+| Formato | 1280×640 no social preview, 1280×460 no banner |
+
+**A marca Atlas não entra aqui.** Sem mascote robô, sem lockup, sem o nome — o perfil se
+apresenta como pessoa procurando vaga, não como agência. O que atravessa é só a linguagem
+visual.
+
+A paleta é fixa de propósito: o que muda por repositório é **qual acento lidera** e o texto
+do selo. Cor arbitrária por projeto quebraria a família.
+
+A cor do texto sobre preenchimento chapado é escolhida por contraste (`on()`), não à mão:
+preto sobre o azul da marca dá 4.0:1 e branco dá 5.2:1, então azul pede branco enquanto lime
+e coral pedem preto.
 
 ### Adicionando um repo novo
 
