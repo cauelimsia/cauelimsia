@@ -63,6 +63,7 @@ sistemas de saúde suplementar, CRM e captação de leads.
 
 | Repo | O que tem de interessante |
 |---|---|
+| **[surebet-api](https://github.com/cauelimsia/surebet-api)** | Motor de arbitragem esportiva como função pura, worker que reconcilia estado em vez de acumular, e o detalhe de agrupamento de linha assinada que separa arbitragem real de fantasma. Monorepo pnpm com Vitest |
 | **[pront-saude-digital](https://github.com/cauelimsia/pront-saude-digital)** | Multi-tenancy real: o isolamento entre clínicas está nas policies do Postgres, não na aplicação |
 | **[redecorr-apresentacao](https://github.com/cauelimsia/redecorr-apresentacao)** | Deck em WebGL — uma nuvem de 2.800 partículas em three.js que muda de formação conforme a narrativa, com modo apresentador. JavaScript puro |
 | **[plano-a-apresentacao](https://github.com/cauelimsia/plano-a-apresentacao)** | Engine de slides própria onde o conteúdo é dado: `index.html` tem 44 linhas, o resto é derivado |
