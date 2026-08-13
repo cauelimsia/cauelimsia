@@ -1,8 +1,6 @@
 <div align="center">
 
-# Cauê Lima
-
-**Desenvolvedor full-stack** · Manaus, AM · disponível para remoto
+<img src="assets/banner.png" width="900" alt="Cauê Lima — desenvolvedor full-stack, Manaus AM, disponível para remoto">
 
 Levo produto do schema ao domínio no ar: modelagem de dados, API, interface e deploy.
 A maior parte do que construí está em produção hoje, atendendo usuário real —
