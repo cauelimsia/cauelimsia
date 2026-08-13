@@ -140,7 +140,7 @@ def sticker(img, text, accent, cx, cy, angle=-8):
     w, h = int(tw + pad_x * 2), int(f.size + pad_y * 2)
     pill = Image.new("RGBA", (w + SHADOW + 8, h + SHADOW + 8), (0, 0, 0, 0))
     d = ImageDraw.Draw(pill)
-    hard_box(d, [4, 4, 4 + w, 4 + h], accent, shadow=9, radius=10)
+    hard_box(d, [4, 4, 4 + w, 4 + h], accent, shadow=9, radius=14)
     tracked(d, (4 + pad_x, 4 + pad_y - 2), text, f, on(accent), tracking=0.06)
     pill = pill.rotate(angle, expand=True, resample=Image.BICUBIC)
     img.alpha_composite(pill, (int(cx - pill.width / 2), int(cy - pill.height / 2)))
@@ -155,14 +155,14 @@ def chips(img, items, x, y, accent):
     for i, item in enumerate(items):
         tw = d.textlength(item, font=f)
         fill = fills[i % len(fills)]
-        hard_box(d, [x, y, x + tw + pad_x * 2, y + hgt], fill, shadow=6, radius=8)
+        hard_box(d, [x, y, x + tw + pad_x * 2, y + hgt], fill, shadow=6, radius=20)
         d.text((x + pad_x, y + hgt / 2 + 1), item, font=f, fill=on(fill), anchor="lm")
         x += tw + pad_x * 2 + gap
     img.alpha_composite(layer)
 
 
 def card(name, title, subtitle, tech, accent, badge, size=(1280, 640),
-         eyebrow="github.com/cauelimsia"):
+         eyebrow="github.com/cauelimsia", show_chips=True):
     w, h = size
     img = Image.new("RGBA", (w, h), CREAM + (255,))
     blue_grid(img)
@@ -182,8 +182,10 @@ def card(name, title, subtitle, tech, accent, badge, size=(1280, 640),
     tracked(d, (pad + sq + 14, ey - 3), eyebrow.upper(), f_eye, TEXT, tracking=0.11)
 
     # os chips ancoram no rodape; o bloco de texto e centrado no que sobra,
-    # senao o card fica pesado em cima com um vao morto no meio
-    chips_y = h - pad - 50
+    # senao o card fica pesado em cima com um vao morto no meio.
+    # sem chips (banner do perfil, onde a stack vive nas badges do README),
+    # o texto usa a altura inteira.
+    chips_y = (h - pad - 50) if show_chips else (h - pad + 10)
     f_title = fit_tracked(d, title, GROTESK_BOLD, round(h * 0.135), col, -0.035)
     f_sub = font(INTER, max(20, round(h * 0.039)))
     sub_lines = wrap(d, subtitle, f_sub, col)[:3]
@@ -209,7 +211,8 @@ def card(name, title, subtitle, tech, accent, badge, size=(1280, 640),
         d.text((pad, y), line, font=f_sub, fill=MUTED, anchor="la")
         y += line_h
 
-    chips(img, tech, pad, chips_y, accent)
+    if show_chips:
+        chips(img, tech, pad, chips_y, accent)
 
     if badge:
         sticker(img, badge, accent, w - m - round(w * 0.13), m + round(h * 0.20))
@@ -259,6 +262,6 @@ if __name__ == "__main__":
         "banner-perfil", "Cauê Lima",
         "Dev full-stack — do schema ao domínio no ar.",
         ["TypeScript", "Next.js", "Postgres", "Supabase", "Docker"],
-        BLUE, "MANAUS · REMOTO", size=(1280, 460),
-        eyebrow="disponível para contratação",
+        BLUE, "MANAUS · REMOTO", size=(1280, 330),
+        eyebrow="disponível para contratação", show_chips=False,
     ))
