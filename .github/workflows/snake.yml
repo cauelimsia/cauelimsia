@@ -1,0 +1,30 @@
+name: snake
+
+on:
+  schedule:
+    - cron: "0 8 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/snake.yml"]
+
+permissions:
+  contents: write
+
+jobs:
+  snake:
+    runs-on: ubuntu-latest
+    steps:
+      # Paleta do cauedev.shop: ink #111111, blue #125cfe, lime #ccff00, cream #f5f2ea
+      - uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: cauelimsia
+          outputs: |
+            dist/snake-light.svg?color_snake=#111111&color_dots=#e9e4d8,#b9ccff,#7da2ff,#3d76fe,#125cfe
+            dist/snake-dark.svg?color_snake=#ccff00&color_dots=#161b22,#0e2a66,#1746b0,#2f66e8,#7da2ff
+      - uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
