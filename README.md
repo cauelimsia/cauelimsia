@@ -77,12 +77,12 @@ sistemas de saúde suplementar, CRM e captação de leads.
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/langs-dark.svg">
-  <img height="165" src="assets/langs-light.svg" alt="Linguagens mais usadas">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/cauelimsia/cauelimsia/output/langs-dark.svg">
+  <img height="165" src="https://raw.githubusercontent.com/cauelimsia/cauelimsia/output/langs-light.svg" alt="Linguagens mais usadas">
 </picture>
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com?user=cauelimsia&locale=pt_BR&hide_border=true&background=00000000&border=00000000&stroke=00000000&ring=3d76fe&fire=ccff00&currStreakNum=e6edf3&sideNums=e6edf3&currStreakLabel=7da2ff&sideLabels=e6edf3&dates=9ba3af">
-  <img height="165" src="https://streak-stats.demolab.com?user=cauelimsia&locale=pt_BR&hide_border=true&background=00000000&border=00000000&stroke=00000000&ring=125cfe&fire=ff4d4d&currStreakNum=111111&sideNums=111111&currStreakLabel=125cfe&sideLabels=111111&dates=6b7280" alt="Sequência de contribuições">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/cauelimsia/cauelimsia/output/streak-dark.svg">
+  <img height="165" src="https://raw.githubusercontent.com/cauelimsia/cauelimsia/output/streak-light.svg" alt="Ritmo de contribuições">
 </picture>
 
 <picture>
