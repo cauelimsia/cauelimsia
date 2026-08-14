@@ -77,8 +77,8 @@ sistemas de saúde suplementar, CRM e captação de leads.
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=cauelimsia&layout=compact&langs_count=6&hide=css&exclude_repo=cauelimsia,sandbox&bg_color=00000000&hide_border=true&title_color=7da2ff&text_color=e6edf3">
-  <img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=cauelimsia&layout=compact&langs_count=6&hide=css&exclude_repo=cauelimsia,sandbox&bg_color=00000000&hide_border=true&title_color=125cfe&text_color=111111" alt="Linguagens mais usadas">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/langs-dark.svg">
+  <img height="165" src="assets/langs-light.svg" alt="Linguagens mais usadas">
 </picture>
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com?user=cauelimsia&locale=pt_BR&hide_border=true&background=00000000&border=00000000&stroke=00000000&ring=3d76fe&fire=ccff00&currStreakNum=e6edf3&sideNums=e6edf3&currStreakLabel=7da2ff&sideLabels=e6edf3&dates=9ba3af">
