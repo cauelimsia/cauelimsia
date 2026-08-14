@@ -1,2 +1,6 @@
 tools/fonts/
 tools/cards/
+tools/.fonts/
+cards-preview/
+dist/
+__pycache__/

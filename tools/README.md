@@ -47,3 +47,17 @@ de novo. Depois suba a imagem em **Settings → Social preview** do repositório
 
 > Repositório privado não tem a seção de social preview: ela só aparece depois que o repo
 > vira público.
+
+## `gen_activity_cards.py`
+
+Gera os cards de **linguagens** e **streak** da seção Atividade do README, nas variantes
+clara e escura, com o texto renderizado como path vetorial de Space Grotesk/Inter (baixadas
+em runtime, cache em `tools/.fonts/`).
+
+```bash
+pip install fonttools
+GITHUB_TOKEN=... python tools/gen_activity_cards.py dist/
+```
+
+Roda todo dia no workflow `snake.yml`, que publica os quatro SVGs junto com a cobrinha na
+branch `output` — o README aponta para lá, então nada disso gera commit em `main`.
