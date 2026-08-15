@@ -10,6 +10,7 @@ atendendo usuário real: saúde suplementar, CRM e captação de leads.
 <a href="https://cauedev.shop"><img src="https://img.shields.io/badge/cauedev.shop-125CFE?style=flat&logo=googlechrome&logoColor=white" alt="cauedev.shop"></a>
 <a href="mailto:clsolucoesweb@gmail.com"><img src="https://img.shields.io/badge/E--mail-EA4335?style=flat&logo=gmail&logoColor=white" alt="E-mail"></a>
 <a href="https://wa.me/5592981524960"><img src="https://img.shields.io/badge/WhatsApp-25D366?style=flat&logo=whatsapp&logoColor=white" alt="WhatsApp"></a>
+<a href="https://www.linkedin.com/in/cau%C3%AA-lima-84b80333a"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat" alt="LinkedIn"></a>
 <a href="https://instagram.com/atlascompany.ia"><img src="https://img.shields.io/badge/Instagram-E4405F?style=flat&logo=instagram&logoColor=white" alt="Instagram"></a>
 
 </div>
